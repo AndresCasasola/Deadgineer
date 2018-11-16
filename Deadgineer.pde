@@ -3,6 +3,7 @@ PImage bg;
 Player player1,player2;
 ArrayList<Shot> shotsPlayer1, shotsPlayer2;
 //int num_shots_1, num_shots_2;
+int time1, time2;
 
 void setup () {
   size(800,480);
@@ -34,6 +35,12 @@ void draw () {
 }
 
 void mousePressed(MouseEvent event){
-  if(event.getButton()==39 && shotsPlayer1.size() < 5) shotsPlayer1.add(new Shot(player1.getX()+55, player1.getY(), 1));
-  if(event.getButton()==37 && shotsPlayer2.size() < 5) shotsPlayer2.add(new Shot(player2.getX()-55, player2.getY(), -1));  
+  if(event.getButton()==39 && shotsPlayer1.size() < 5 && ((millis() - time1) > 500) ){
+    shotsPlayer1.add(new Shot(player1.getX()+55, player1.getY(), 1));
+    time1 = millis();
+  }
+    if(event.getButton()==37 && shotsPlayer1.size() < 5 && ((millis() - time2) > 500) ){
+    shotsPlayer2.add(new Shot(player2.getX()-55, player2.getY(), -1));
+    time2 = millis();
+  }  
 }
