@@ -1,11 +1,15 @@
 # Deadgineer
 
-This is a game created by two students of Electronics System Engineering.
-The game is implemented in Processing and use a little part of code in arduino for using sensors with the function of buttons.
+<p align="center">
+  <img width="600" height="378" src="https://github.com/AndresCasasola/Deadgineer/raw/master/data/readmeData/front.png">
+</p>
 
-## Description
-In the game exist two player, one in front of the other, the player move is part of the code and it move up and down, velocity depends of the difficulty selected.
-Both of player have available shots with the 'button', when real player push 'button' the virtual player shows a shot in display.
-Shots velocity is constant and the move is only horizontally, when two shots crash, both disappear.
-The objective of the game is hit the other player with the shots and reduce his life to zero.
-When life of one player turn zero the game finish and the other player win.
+Deadgineer is a nice game created by two students of Electronics Systems Engineering.
+The game is implemented in Processing and arduino. Arduino takes data from sensors and sends characters to processing to create objets in the game window.
+
+### Description
+- In the game exists two players, one in front of the other. Both players moves automatically up and down. Its speeds depends of the difficulty selected.
+- Both players have available shots, when the player "push" the sensor, the virtual player shows a shot in display.
+- Shot´s speed is constant and the move is only horizontally, when two shots crash, both disappear.
+- The objective of the game is to hit the other player with the shots and reduce his life to zero.
+- When a player´s life becomes to zero the game finish and the other player wins.
