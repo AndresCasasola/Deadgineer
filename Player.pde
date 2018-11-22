@@ -4,10 +4,10 @@ class Player {
   PImage playerImage;
   int dir;
 
-  Player(int x_x, int y_y, int dir_dir) {
+  Player(int x_x, int y_y, int dir_dir, String player) {
     x=x_x;
     y=y_y;
-    //playerImage=loadImage("players/trump.png");
+    playerImage=loadImage(player);
     dir = dir_dir;
   }
 

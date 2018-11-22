@@ -16,7 +16,7 @@ int[] shotsToRemove1;
 int[] shotsToRemove2;
 Minim soundengine;
 AudioSample PlayerHitSound;
-boolean start;
+boolean start,selected1,selected2;
 PImage[] ImagePlayers;
 int numImagePlayers;
 
@@ -29,8 +29,8 @@ void setup () {
   explosion = loadImage("explosion.png");
   winner = loadImage("trophy.png");
   loser = loadImage("loser.png");
-  player1 = new Player(50, height/2,1);
-  player2 = new Player(width-50,height/2,-1);
+  //player1 = new Player(50, height/2,1);
+  //player2 = new Player(width-50,height/2,-1);
   shotsPlayer1 = new ArrayList<Shot>();
   shotsPlayer2 = new ArrayList<Shot>();
   String portName = "/dev/ttyACM0";
@@ -50,6 +50,8 @@ void setup () {
   numImagePlayers = 6;
   ImagePlayers = new PImage[numImagePlayers];
   LoadImagePlayers();
+  selected1=selected2=false;
+  
 }
 
 /*****  Draw Function  *****/
@@ -173,14 +175,72 @@ void draw () {
 /*****  Auxiliar Functions  *****/
 
 void mousePressed(MouseEvent event){
-  if(event.getButton()==39 && shotsPlayer1.size() < 5 && ((millis() - time1) > 500) ){
-    shotsPlayer1.add(new Shot(player1.getX()+55, player1.getY(), 1));
-    time1 = millis();
+  if(start==true){
+    if(event.getButton()==39 && shotsPlayer1.size() < 5 && ((millis() - time1) > 500) ){
+      shotsPlayer1.add(new Shot(player1.getX()+55, player1.getY(), 1));
+      time1 = millis();
+    }
+      if(event.getButton()==37 && shotsPlayer2.size() < 5 && ((millis() - time2) > 500) ){
+      shotsPlayer2.add(new Shot(player2.getX()-55, player2.getY(), -1));
+      time2 = millis();
+    }  
+  }else {
+    if(event.getButton()==37 && selected1==false){
+      if ((mouseY>275)&&(mouseY<365)){
+        if ((mouseX>30)&&(mouseX<90)){ 
+          player1 = new Player(50, height/2,1, "players/player0.png");  
+          selected1=true;
+        }else if((mouseX>110)&&(mouseX<170)){ 
+          player1 = new Player(50, height/2,1, "players/player1.png");  
+          selected1=true;
+        }else if((mouseX>190)&&(mouseX<250)){ 
+          player1 = new Player(50, height/2,1, "players/player2.png");  
+          selected1=true;
+        }
+      }else if((mouseY>375)&&(mouseY<465)){
+        if ((mouseX>30)&&(mouseX<90)){ 
+          player1 = new Player(50,height/2,1, "players/player3.png");  
+          selected1=true;
+        }else if((mouseX>110)&&(mouseX<170)){ 
+          player1 = new Player(50,height/2,1, "players/player4.png");  
+          selected1=true;
+        }else if((mouseX>190)&&(mouseX<250)){ 
+          player1 = new Player(50,height/2,1, "players/player5.png");  
+          selected1=true;
+        }
+      }
+    }
+    if(event.getButton()==39  && selected2==false){
+      if ((mouseY>275)&&(mouseY<365)){
+        if ((mouseX>530)&&(mouseX<590)){ 
+          player2 = new Player(width-50, height/2,-1, "players/player0.png");  
+          selected2=true;
+        }else if((mouseX>610)&&(mouseX<670)){
+          player2 = new Player(width-50, height/2,-1, "players/player1.png");  
+          selected2=true;
+        }else if((mouseX>690)&&(mouseX<750)){ 
+          player2 = new Player(width-50, height/2,-1, "players/player2.png");  
+          selected2=true;
+        }
+      }else if((mouseY>375)&&(mouseY<465)){
+        if ((mouseX>530)&&(mouseX<590)){ 
+          player2 = new Player(width-50,height/2,-1, "players/player3.png");  
+          selected2=true;
+        }else if((mouseX>610)&&(mouseX<670)){ 
+          player2 = new Player(width-50,height/2,-1, "players/player4.png");  
+          selected2=true;
+        }else if((mouseX>690)&&(mouseX<750)){ 
+          player2 = new Player(width-50,height/2,-1, "players/player5.png");  
+          selected2=true;
+        }
+      }
+    }
+    if(selected1==true && selected2==true){
+      start=true;
+    }
+    println(selected1);
+    println(selected2);
   }
-    if(event.getButton()==37 && shotsPlayer2.size() < 5 && ((millis() - time2) > 500) ){
-    shotsPlayer2.add(new Shot(player2.getX()-55, player2.getY(), -1));
-    time2 = millis();
-  }  
 }
 
 boolean collision(int p1x, int p1y, int p2x, int p2y, int p1w, int p2w, int p1h, int p2h){
