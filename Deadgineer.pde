@@ -60,7 +60,7 @@ void draw () {
   
   if(start==false){
     // Load Startscreen background
-    PImage start_bg = loadImage("Deadgineer_Start1.png");
+    PImage start_bg = loadImage("Deadgineer_Start2.png");
     background(start_bg);
     // Show players
     int x;
@@ -131,9 +131,6 @@ void draw () {
           }
         }
         
-        println(shotsToRemove1);
-        println(shotsToRemove2);
-        
         for(int i=4; i>=0; i--){
           if(shotsToRemove1[i] == 1){
             //image(explosion, 400,400, 20, 20);
@@ -175,7 +172,7 @@ void draw () {
 /*****  Auxiliar Functions  *****/
 
 void mousePressed(MouseEvent event){
-  if(start==true){
+    if(start==true){
     if(event.getButton()==39 && shotsPlayer1.size() < 5 && ((millis() - time1) > 500) ){
       shotsPlayer1.add(new Shot(player1.getX()+55, player1.getY(), 1));
       time1 = millis();
@@ -188,7 +185,7 @@ void mousePressed(MouseEvent event){
     if(event.getButton()==37 && selected1==false){
       if ((mouseY>275)&&(mouseY<365)){
         if ((mouseX>30)&&(mouseX<90)){ 
-          player1 = new Player(50, height/2,1, "players/player0.png");  
+          player1 = new Player(50, height/2,1, "players/player0.png");
           selected1=true;
         }else if((mouseX>110)&&(mouseX<170)){ 
           player1 = new Player(50, height/2,1, "players/player1.png");  
@@ -210,7 +207,7 @@ void mousePressed(MouseEvent event){
         }
       }
     }
-    if(event.getButton()==39  && selected2==false){
+    if(event.getButton()==37  && selected2==false){
       if ((mouseY>275)&&(mouseY<365)){
         if ((mouseX>530)&&(mouseX<590)){ 
           player2 = new Player(width-50, height/2,-1, "players/player0.png");  
@@ -235,11 +232,14 @@ void mousePressed(MouseEvent event){
         }
       }
     }
-    if(selected1==true && selected2==true){
-      start=true;
+    if(event.getButton()==37 && selected1==true && selected2==true){
+      if((mouseY>328)&&(mouseY<380)){
+        if ((mouseX>330)&&(mouseX<470)){ 
+          start=true;
+        }
+      }
+
     }
-    println(selected1);
-    println(selected2);
   }
 }
 
