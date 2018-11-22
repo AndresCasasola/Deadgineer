@@ -16,6 +16,7 @@ int[] shotsToRemove1;
 int[] shotsToRemove2;
 Minim soundengine;
 AudioSample PlayerHitSound;
+boolean start;
 
 /*****  Setup Function  *****/
 
@@ -42,101 +43,112 @@ void setup () {
   }
   fin=0;
   soundengine = new Minim(this);
-  PlayerHitSound = soundengine.loadSample("HitSound.mp3", 1024);
+  PlayerHitSound = soundengine.loadSample("sounds/HitSound.mp3", 1024);
+  start = false;
 }
 
 /*****  Draw Function  *****/
 
 void draw () {
-  background(bg);
-  marker.load_numbers();
-  if(fin==0){
-      player1.drawPlayer();
-      player2.drawPlayer();
-      player1.movePlayer();
-      player2.movePlayer();
-      
-      for(int i = 0; i < shotsPlayer1.size(); i++){
-        int xpos = shotsPlayer1.get(i).getX();
-        int ypos = shotsPlayer1.get(i).getY();
-        if(xpos < 800+50){
-          shotsPlayer1.get(i).drawShot();
-          shotsPlayer1.get(i).moveShot();
-        }else{
-          shotsPlayer1.remove(i);
-        }
-        if(collision(xpos, ypos, player2.getX(), player2.getY(), 40, 40, 20, 60)){
-             shotsToRemove1[i] = 1;
-             pointsp1++;
-             PlayerHitSound.trigger();
-             if(pointsp1<10) marker.set_v1(pointsp1);
-        }
-      }
-      
-      for(int i=0; i < shotsPlayer2.size(); i++){
-        int xpos2 = shotsPlayer2.get(i).getX();
-        int ypos2 = shotsPlayer2.get(i).getY();
-        if(xpos2 > -50){
-          shotsPlayer2.get(i).drawShot();
-          shotsPlayer2.get(i).moveShot();
-        }else{
-          shotsPlayer2.remove(i);
-        }
-        for(int j=0; j<shotsPlayer1.size(); j++){
-          int xpos1 = shotsPlayer1.get(j).getX();
-          int ypos1 = shotsPlayer1.get(j).getY();
-          if(collision(xpos1, ypos1, xpos2, ypos2, 40, 40, 20, 20)){
-             shotsToRemove2[i] = 1;
-             shotsToRemove1[j] = 1;
+  
+  if(start==false){
+    PImage start_bg = loadImage("Deadgineer_Start1.png");
+    background(start_bg);
+    // TODO:
+    // Show players
+    // Select players
+    // Start game (start = true)
+  
+  }else{
+    background(bg);
+    marker.load_numbers();
+    if(fin==0){
+        player1.drawPlayer();
+        player2.drawPlayer();
+        player1.movePlayer();
+        player2.movePlayer();
+        
+        for(int i = 0; i < shotsPlayer1.size(); i++){
+          int xpos = shotsPlayer1.get(i).getX();
+          int ypos = shotsPlayer1.get(i).getY();
+          if(xpos < 800+50){
+            shotsPlayer1.get(i).drawShot();
+            shotsPlayer1.get(i).moveShot();
+          }else{
+            shotsPlayer1.remove(i);
+          }
+          if(collision(xpos, ypos, player2.getX(), player2.getY(), 40, 40, 20, 60)){
+               shotsToRemove1[i] = 1;
+               pointsp1++;
+               PlayerHitSound.trigger();
+               if(pointsp1<10) marker.set_v1(pointsp1);
           }
         }
-        if(collision(xpos2, ypos2, player1.getX(), player1.getY(), 40, 40, 20, 60)){
-             shotsToRemove2[i] = 1;
-             pointsp2++;
-             PlayerHitSound.trigger();
-             if(pointsp2<10) marker.set_v2(pointsp2);
-        }
-      }
-      
-      println(shotsToRemove1);
-      println(shotsToRemove2);
-      
-      for(int i=4; i>=0; i--){
-        if(shotsToRemove1[i] == 1){
-          //image(explosion, 400,400, 20, 20);
-          shotsPlayer1.remove(i);
-          shotsToRemove1[i] = 0;
-        }
-        if(shotsToRemove2[i] == 1){
-          //image(explosion, 400,400, 20, 20);
-          shotsPlayer2.remove(i);
-          shotsToRemove2[i] = 0;
-          //delay(1000);
+        
+        for(int i=0; i < shotsPlayer2.size(); i++){
+          int xpos2 = shotsPlayer2.get(i).getX();
+          int ypos2 = shotsPlayer2.get(i).getY();
+          if(xpos2 > -50){
+            shotsPlayer2.get(i).drawShot();
+            shotsPlayer2.get(i).moveShot();
+          }else{
+            shotsPlayer2.remove(i);
+          }
+          for(int j=0; j<shotsPlayer1.size(); j++){
+            int xpos1 = shotsPlayer1.get(j).getX();
+            int ypos1 = shotsPlayer1.get(j).getY();
+            if(collision(xpos1, ypos1, xpos2, ypos2, 40, 40, 20, 20)){
+               shotsToRemove2[i] = 1;
+               shotsToRemove1[j] = 1;
+            }
+          }
+          if(collision(xpos2, ypos2, player1.getX(), player1.getY(), 40, 40, 20, 60)){
+               shotsToRemove2[i] = 1;
+               pointsp2++;
+               PlayerHitSound.trigger();
+               if(pointsp2<10) marker.set_v2(pointsp2);
+          }
         }
         
+        println(shotsToRemove1);
+        println(shotsToRemove2);
+        
+        for(int i=4; i>=0; i--){
+          if(shotsToRemove1[i] == 1){
+            //image(explosion, 400,400, 20, 20);
+            shotsPlayer1.remove(i);
+            shotsToRemove1[i] = 0;
+          }
+          if(shotsToRemove2[i] == 1){
+            //image(explosion, 400,400, 20, 20);
+            shotsPlayer2.remove(i);
+            shotsToRemove2[i] = 0;
+            //delay(1000);
+          }
+          
+        }
+        
+        if (pointsp1==10){
+          fin=1;  
+        }else if(pointsp2 == 10){
+          fin=2;
+        }
+    }else {
+      if(fin==1){
+        image(winner, 100, height/2, 100, 100);
+        image(loser, width-100, height/2, 100, 100);
       }
+      if(fin==2){
+        image(winner, width-150, height/2, 200, 200);
+        image(loser, 150, height/2, 250, 200);
+      }
+    }
       
-      if (pointsp1==10){
-        fin=1;  
-      }else if(pointsp2 == 10){
-        fin=2;
-      }
-  }else {
-    if(fin==1){
-      image(winner, 100, height/2, 100, 100);
-      image(loser, width-100, height/2, 100, 100);
-    }
-    if(fin==2){
-      image(winner, width-150, height/2, 200, 200);
-      image(loser, 150, height/2, 250, 200);
-    }
+    /*if (port.available() > 0){
+      value = port.read();
+      println("Value: " + value);
+    }*/
   }
-    
-  /*if (port.available() > 0){
-    value = port.read();
-    println("Value: " + value);
-  }*/
-
 }
 
 /*****  Auxiliar Functions  *****/

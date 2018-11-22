@@ -9,7 +9,7 @@ class Marker {
     v2 = new_v2;
     String name;
     for(int i=0; i<10; i++){
-       name = i + ".png"; 
+       name = "numbers/" + i + ".png";
        numbers[i] = loadImage(name);
     }
   }

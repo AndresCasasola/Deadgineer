@@ -7,7 +7,7 @@ class Player {
   Player(int x_x, int y_y, int dir_dir) {
     x=x_x;
     y=y_y;
-    playerImage=loadImage("trump.png");
+    playerImage=loadImage("players/trump.png");
     dir = dir_dir;
   }
 

@@ -7,15 +7,15 @@ class Shot {
     x=x_x;
     y=y_y;
     if(dir_dir==1){
-      shotImage=loadImage("shot1.png");
+      shotImage=loadImage("rockets/shot1.png");
     }else{
-      shotImage=loadImage("shot2.png");
+      shotImage=loadImage("rockets/shot2.png");
     }
     dir= dir_dir;
   }
 
   void drawShot() {
-    image(shotImage,x,y,40,55);
+    image(shotImage,x,y,40,55);  // 40, 55
   }
 
   void moveShot() {
