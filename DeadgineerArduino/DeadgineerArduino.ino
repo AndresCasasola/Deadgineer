@@ -46,7 +46,6 @@ void loop() {
     s2_value = 0;
     time2 = millis();
   }
-
   delay(100);
 
 }

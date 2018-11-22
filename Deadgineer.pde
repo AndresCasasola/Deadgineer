@@ -4,19 +4,19 @@ import ddf.minim.*;  // Library Minim
 
 /*****  Global Variables  *****/
 
-PImage bg,explosion,winner,loser;
+PImage bg, explosion, winner, loser;
 Player player1,player2;
 ArrayList <Shot> shotsPlayer1, shotsPlayer2;
 //int num_shots_1, num_shots_2;
 int time1, time2;
 Serial port;
-int value,pointsp1,pointsp2,fin;
+int value, pointsp1, pointsp2, fin;
 Marker marker;
 int[] shotsToRemove1;
 int[] shotsToRemove2;
 Minim soundengine;
 AudioSample PlayerHitSound;
-boolean start,selected1,selected2;
+boolean start, selected1, selected2;
 PImage[] ImagePlayers;
 int numImagePlayers;
 
@@ -28,13 +28,11 @@ void setup () {
   bg = loadImage("DEAD_bg.png");
   explosion = loadImage("explosion.png");
   winner = loadImage("trophy.png");
-  loser = loadImage("loser.png");
-  //player1 = new Player(50, height/2,1);
-  //player2 = new Player(width-50,height/2,-1);
+  loser = loadImage("Everyone.png");
   shotsPlayer1 = new ArrayList<Shot>();
   shotsPlayer2 = new ArrayList<Shot>();
   String portName = "/dev/ttyACM0";
-  //port = new Serial(this, portName, 9600);
+  port = new Serial(this, portName, 9600);
   pointsp1=pointsp2=0;
   marker = new Marker(pointsp1, pointsp2);
   shotsToRemove1 = new int[5];
@@ -153,19 +151,27 @@ void draw () {
         }
     }else {
       if(fin==1){
-        image(winner, 100, height/2, 100, 100);
-        image(loser, width-100, height/2, 100, 100);
+        image(winner, 200, height/2, 150, 150);
+        image(loser, width-190, height/2, 265, 110);
       }
       if(fin==2){
-        image(winner, width-150, height/2, 200, 200);
-        image(loser, 150, height/2, 250, 200);
+        image(winner, width-200, height/2, 150, 150);
+        image(loser, 200, height/2, 265, 110);
       }
     }
       
-    /*if (port.available() > 0){
+    if (port.available() > 0){
       value = port.read();
-      println("Value: " + value);
-    }*/
+      println(value);
+    if(value == 1 && shotsPlayer1.size() < 5 && ((millis() - time1) > 500) ){
+      shotsPlayer1.add(new Shot(player1.getX()+55, player1.getY(), 1));
+      time1 = millis();
+    }
+    if(value == 2 && shotsPlayer2.size() < 5 && ((millis() - time2) > 500) ){
+      shotsPlayer2.add(new Shot(player2.getX()-55, player2.getY(), -1));
+      time2 = millis();
+    }
+    }
   }
 }
 
@@ -173,18 +179,18 @@ void draw () {
 
 void mousePressed(MouseEvent event){
     if(start==true){
-    if(event.getButton()==39 && shotsPlayer1.size() < 5 && ((millis() - time1) > 500) ){
+    /*if(event.getButton()==39 && shotsPlayer1.size() < 5 && ((millis() - time1) > 500) ){
       shotsPlayer1.add(new Shot(player1.getX()+55, player1.getY(), 1));
       time1 = millis();
     }
-      if(event.getButton()==37 && shotsPlayer2.size() < 5 && ((millis() - time2) > 500) ){
+    if(event.getButton()==37 && shotsPlayer2.size() < 5 && ((millis() - time2) > 500) ){
       shotsPlayer2.add(new Shot(player2.getX()-55, player2.getY(), -1));
       time2 = millis();
-    }  
+    }*/  
   }else {
     if(event.getButton()==37 && selected1==false){
       if ((mouseY>275)&&(mouseY<365)){
-        if ((mouseX>30)&&(mouseX<90)){ 
+        if ((mouseX>30)&&(mouseX<90)){
           player1 = new Player(50, height/2,1, "players/player0.png");
           selected1=true;
         }else if((mouseX>110)&&(mouseX<170)){ 
