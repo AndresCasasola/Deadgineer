@@ -1,5 +1,6 @@
 
 import processing.serial.*;
+import ddf.minim.*;  // Library Minim
 
 /*****  Global Variables  *****/
 
@@ -13,6 +14,8 @@ int value,pointsp1,pointsp2,fin;
 Marker marker;
 int[] shotsToRemove1;
 int[] shotsToRemove2;
+Minim soundengine;
+AudioSample PlayerHitSound;
 
 /*****  Setup Function  *****/
 
@@ -38,6 +41,8 @@ void setup () {
       shotsToRemove2[i] = 0;
   }
   fin=0;
+  soundengine = new Minim(this);
+  PlayerHitSound = soundengine.loadSample("HitSound.mp3", 1024);
 }
 
 /*****  Draw Function  *****/
@@ -63,8 +68,9 @@ void draw () {
         if(collision(xpos, ypos, player2.getX(), player2.getY(), 40, 40, 20, 60)){
              shotsToRemove1[i] = 1;
              pointsp1++;
+             PlayerHitSound.trigger();
              if(pointsp1<10) marker.set_v1(pointsp1);
-          }
+        }
       }
       
       for(int i=0; i < shotsPlayer2.size(); i++){
@@ -87,8 +93,9 @@ void draw () {
         if(collision(xpos2, ypos2, player1.getX(), player1.getY(), 40, 40, 20, 60)){
              shotsToRemove2[i] = 1;
              pointsp2++;
+             PlayerHitSound.trigger();
              if(pointsp2<10) marker.set_v2(pointsp2);
-          }
+        }
       }
       
       println(shotsToRemove1);
