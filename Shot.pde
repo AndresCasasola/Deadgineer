@@ -19,7 +19,7 @@ class Shot {
   }
 
   void moveShot() {
-    x += dir;
+    x += (dir*2);
 }
 
   int getX(){
