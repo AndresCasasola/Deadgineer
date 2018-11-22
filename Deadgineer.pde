@@ -17,6 +17,8 @@ int[] shotsToRemove2;
 Minim soundengine;
 AudioSample PlayerHitSound;
 boolean start;
+PImage[] ImagePlayers;
+int numImagePlayers;
 
 /*****  Setup Function  *****/
 
@@ -45,6 +47,9 @@ void setup () {
   soundengine = new Minim(this);
   PlayerHitSound = soundengine.loadSample("sounds/HitSound.mp3", 1024);
   start = false;
+  numImagePlayers = 6;
+  ImagePlayers = new PImage[numImagePlayers];
+  LoadImagePlayers();
 }
 
 /*****  Draw Function  *****/
@@ -52,10 +57,24 @@ void setup () {
 void draw () {
   
   if(start==false){
+    // Load Startscreen background
     PImage start_bg = loadImage("Deadgineer_Start1.png");
     background(start_bg);
-    // TODO:
     // Show players
+    int x;
+    int y = 320;
+    int xOffset =500;
+    for(int i=0; i<2; i++){    // files
+      x = 60;
+      for(int j=0; j<3; j++){  // columns
+        image(ImagePlayers[3*i+j],x,y,65,90);                  // Draw player 1 images
+        image(ImagePlayers[3*i+j],x+xOffset,y,65,90);          // Draw player 2 images
+        x += 80;
+      }
+      y += 100;
+    }
+    
+    // TODO:
     // Select players
     // Start game (start = true)
   
@@ -169,5 +188,12 @@ boolean collision(int p1x, int p1y, int p2x, int p2y, int p1w, int p2w, int p1h,
     return true;
   }else{
     return false;
+  }
+}
+
+void LoadImagePlayers(){
+  for(int i=0; i<numImagePlayers; i++){
+    String name = "data/players/player" + i + ".png";
+    ImagePlayers[i] = loadImage(name);
   }
 }
