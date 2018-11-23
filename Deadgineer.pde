@@ -1,3 +1,12 @@
+/*
+*
+*  Authors:
+*  - Andres Casasola Dominguez
+*  - Fernando Navarrete Mohedano
+*
+*  Game available in: https://github.com/AndresCasasola/Deadgineer
+*
+*/
 
 import processing.serial.*;
 import ddf.minim.*;  // Library Minim
